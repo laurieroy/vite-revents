@@ -3,8 +3,8 @@
 ## Tech Stack
 - React + TypeScript + Vite
 
-
-
+To start the app:
+```pnpm run dev```
 
 
 
