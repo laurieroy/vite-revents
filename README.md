@@ -2,6 +2,16 @@
 
 ## Tech Stack
 - React + TypeScript + Vite
+- Styling: Semantic-UI
+
+
+### To run locally:
+
+Clone the app:
+```
+git clone git@github.com:laurieroy/vite-revents.git
+```
+
 
 To start the app:
 ```pnpm run dev```
