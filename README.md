@@ -3,7 +3,7 @@
 ## Tech Stack
 - React + TypeScript + Vite
 - Styling: Semantic-UI
-
+- CUID2 for temporary collision-resistant ID
 
 ### To run locally:
 
