@@ -8,11 +8,17 @@ import { AppEvent } from "@/types/event";
 type Props = {
   formOpen: boolean;
   setFormOpen: (value: boolean) => void;
+  selectEvent: (event: AppEvent) => void;
+  selectedEvent: AppEvent | null;
 };
 
-export default function EventDashboard({ formOpen, setFormOpen }: Props) {
+export default function EventDashboard({
+  formOpen,
+  setFormOpen,
+  selectEvent,
+  selectedEvent,
+}: Props) {
   const [events, setEvents] = useState<AppEvent[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<AppEvent | null>(null);
 
   useEffect(() => {
     setEvents(sampleData);
@@ -24,14 +30,10 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
     });
   }
 
-  function handleSelectEvent(event: AppEvent) {
-    setSelectedEvent(event);
-    setFormOpen(true);
-  }
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventList events={events} selectEvent={handleSelectEvent} />
+        <EventList events={events} selectEvent={selectEvent} />
       </Grid.Column>
 
       <Grid.Column width={6}>
@@ -40,6 +42,7 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
             setFormOpen={setFormOpen}
             addEvent={addEvent}
             selectedEvent={selectedEvent}
+            key={selectedEvent ? selectedEvent.id : "create"}
           />
         )}
       </Grid.Column>
