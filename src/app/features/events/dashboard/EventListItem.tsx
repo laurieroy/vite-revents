@@ -10,18 +10,22 @@ import {
 import EventListAttendee from "./EventListAttendee";
 import { AppEvent } from "@/types/event";
 
-
 type Props = {
-  event: AppEvent
+  event: AppEvent;
+  selectEvent: (event: AppEvent) => void;
 };
 
-export default function EventListItem({ event }: Props) {
+export default function EventListItem({ event, selectEvent }: Props) {
   return (
     <SegmentGroup>
       <Segment>
         <ItemGroup>
           <Item>
-            <Item.Image size="tiny" circular src={event.hostPhotoURL || "/user.png"} />
+            <Item.Image
+              size="tiny"
+              circular
+              src={event.hostPhotoURL || "/user.png"}
+            />
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
               <Item.Description>Hosted by {event.hostedBy}</Item.Description>
@@ -49,7 +53,12 @@ export default function EventListItem({ event }: Props) {
 
       <Segment clearing>
         <span>{event.description}</span>
-        <Button color="teal" floated="right" content="View" />
+        <Button
+          color="teal"
+          floated="right"
+          content="View"
+          onClick={() => selectEvent(event)}
+        />
       </Segment>
     </SegmentGroup>
   );
