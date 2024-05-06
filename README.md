@@ -21,7 +21,7 @@ Install dependencies:
 To start the app:
 ```pnpm run dev```
 
-
+App will be available at http://localhost:5173/
 
 
 <!-- 
