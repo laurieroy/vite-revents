@@ -8,7 +8,7 @@ import {
   SegmentGroup,
 } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
-import { AppEvent } from "../../../types/event";
+import { AppEvent } from "@/types/event";
 
 
 type Props = {
