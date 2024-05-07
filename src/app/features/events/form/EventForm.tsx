@@ -7,8 +7,14 @@ type Props = {
   setFormOpen: (value: boolean) => void;
   addEvent: (event: AppEvent) => void;
   selectedEvent: AppEvent | null;
+  updateEvent: (event: AppEvent) => void;
 };
-export default function EventForm({ setFormOpen, addEvent, selectedEvent }: Props) {
+export default function EventForm({
+  setFormOpen,
+  addEvent,
+  selectedEvent,
+  updateEvent,
+}: Props) {
   const initialValues = selectedEvent ?? {
     id: "",
     title: "",
@@ -24,13 +30,15 @@ export default function EventForm({ setFormOpen, addEvent, selectedEvent }: Prop
   const [values, setValues] = useState(initialValues);
 
   function onSubmit() {
-    addEvent({
-      ...values,
-      id: createId(),
-      hostedBy: "bob",
-      attendees: [],
-      hostPhotoURL: "",
-    });
+    selectedEvent
+      ? updateEvent({ ...selectedEvent, ...values })
+      : addEvent({
+          ...values,
+          id: createId(),
+          hostedBy: "bob",
+          attendees: [],
+          hostPhotoURL: "",
+        });
     setFormOpen(false);
   }
 
@@ -43,7 +51,7 @@ export default function EventForm({ setFormOpen, addEvent, selectedEvent }: Prop
 
   return (
     <Segment clearing>
-      <Header content="Create Event" />
+      <Header content={selectedEvent ? "Update Event" : "Create Event"} />
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <input
@@ -91,7 +99,7 @@ export default function EventForm({ setFormOpen, addEvent, selectedEvent }: Prop
           />
         </Form.Field>
 
-        <Button type="submit" floated="right" positive content="Submit" />
+        <Button type="submit" floated="right" positive content={selectedEvent ? "Update" : "Submit"} />
         <Button
           onClick={() => setFormOpen(false)}
           type="button"
