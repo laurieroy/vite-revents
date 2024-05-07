@@ -1,7 +1,7 @@
 import { Container } from "semantic-ui-react";
-import EventDashboard from "@/features/events/dashboard/EventDashboard";
 import Navbar from "./nav/Navbar";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import { AppEvent } from "@/app/types/event";
 
 function App() {
@@ -22,12 +22,7 @@ function App() {
     <>
       <Navbar setFormOpen={handleCreateFormOpen} />
       <Container className="main">
-        <EventDashboard
-          formOpen={formOpen}
-          setFormOpen={setFormOpen}
-          selectedEvent={selectedEvent}
-          selectEvent={handleSelectEvent}
-        />
+        <Outlet />
       </Container>
     </>
   );
