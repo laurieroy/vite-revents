@@ -1,4 +1,4 @@
-@import url('semantic-ui-css/semantic.min.css');
+@import url("semantic-ui-css/semantic.min.css");
 
 body {
   color: #eaeaea;
@@ -13,8 +13,23 @@ body {
   );
 }
 
-
 .ui.main.container {
-    margin-top: 7em;
+  margin-top: 7em;
 }
 
+.masthead {
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(
+    to right,
+    rgb(24, 42, 115) 0%,
+    rgb(33, 138, 174) 69%,
+    rgb(32, 167, 172) 89%
+  ) !important;
+  height: 100vh;
+}
+
+.masthead h1.ui.header {
+  font-size: 4em;
+  font-weight: normal;
+}
