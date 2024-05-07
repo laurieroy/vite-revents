@@ -8,14 +8,19 @@ import {
   SegmentGroup,
 } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
-import { AppEvent } from "@/types/event";
+import { AppEvent, Attendee } from "@/types/event";
 
 type Props = {
   event: AppEvent;
   selectEvent: (event: AppEvent) => void;
+  deleteEvent: (eventId: string) => void;
 };
 
-export default function EventListItem({ event, selectEvent }: Props) {
+export default function EventListItem({
+  event,
+  selectEvent,
+  deleteEvent,
+}: Props) {
   return (
     <SegmentGroup>
       <Segment>
@@ -45,7 +50,7 @@ export default function EventListItem({ event, selectEvent }: Props) {
 
       <Segment secondary>
         <List horizontal>
-          {event.attendees.map((attendee: Props) => (
+          {event.attendees.map((attendee: Attendee) => (
             <EventListAttendee key={attendee.id} attendee={attendee} />
           ))}
         </List>
@@ -53,6 +58,12 @@ export default function EventListItem({ event, selectEvent }: Props) {
 
       <Segment clearing>
         <span>{event.description}</span>
+        <Button
+          color="red"
+          floated="right"
+          content="Delete"
+          onClick={() => deleteEvent(event.id)}
+        />
         <Button
           color="teal"
           floated="right"
