@@ -4,6 +4,7 @@
 - React + TypeScript + Vite
 - Styling: Semantic-UI
 - CUID2 for temporary collision-resistant ID
+- Routing: React Router 6.4
 
 ### To run locally:
 
