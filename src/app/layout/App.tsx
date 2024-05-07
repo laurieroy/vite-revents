@@ -1,8 +1,8 @@
 import { Container } from "semantic-ui-react";
-import EventDashboard from "../features/events/dashboard/EventDashboard";
+import EventDashboard from "@/features/events/dashboard/EventDashboard";
 import Navbar from "./nav/Navbar";
 import { useState } from "react";
-import { AppEvent } from "@/types/event";
+import { AppEvent } from "@/app/types/event";
 
 function App() {
   const [formOpen, setFormOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { AppEvent } from "@/types/event";
+import { AppEvent } from "@/app/types/event";
 import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
 import { createId } from "@paralleldrive/cuid2";
