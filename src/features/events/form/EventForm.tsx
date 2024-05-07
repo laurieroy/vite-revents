@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default function EventForm() {
   const initialValues = {
@@ -89,7 +90,7 @@ export default function EventForm() {
 
         <Button type="submit" floated="right" positive content="Submit" />
         <Button
-    
+          as={Link} to="/events"
           type="button"
           floated="right"
           content="Cancel"

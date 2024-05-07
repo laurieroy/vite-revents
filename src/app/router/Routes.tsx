@@ -1,10 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import EventDashboard from "@/features/events/dashboard/EventDashboard";
-import EventDetails from "@/features/events/details/EventDetails";
+import EventDetails from "@/features/events/details/EventDetailsPage";
 import EventForm from "@/features/events/form/EventForm";
 
-type Props = {};
 
 export const router = createBrowserRouter([
   {
