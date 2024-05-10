@@ -1,106 +1,127 @@
-import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import { FieldValues, Controller, useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
 import { createId } from "@paralleldrive/cuid2";
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { createEvent, updateEvent } from "../eventSlice";
+import { categoryOptions } from "./categoryOptions";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function EventForm() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({ mode: "onTouched" });
   let { id } = useParams();
   const event = useAppSelector((state) =>
     state.events.events.find((evt) => evt.id === id)
   );
-  const initialValues = event ?? {
-    id: "",
-    title: "",
-    date: "",
-    category: "",
-    description: "",
-    city: "",
-    venue: "",
-    // hostedBy: ""
-    // hostPhotoURL: ""
-    // attendees: Attendee[];
-  };
-  const [values, setValues] = useState(initialValues);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  function onSubmit() {
+  function onSubmit(data: FieldValues) {
+    console.log(data);
     id = id ?? createId();
     event
-      ? dispatch(updateEvent({ ...event, ...values }))
+      ? dispatch(updateEvent({ ...event, ...data, date: data.date.toString() }))
       : dispatch(
           createEvent({
-            ...values,
+            ...data,
             id,
             hostedBy: "bob",
             attendees: [],
             hostPhotoURL: "",
+            date: data.date.toString(),
           })
         );
     navigate(`/events/${id}`);
   }
 
-  function handleInputChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
-  }
-
   return (
     <Segment clearing>
-      <Header content={event ? "Update Event" : "Create Event"} />
-      <Form onSubmit={onSubmit}>
+      <Header content="Event details" sub color="teal" />
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Input
+          defaultValue={event?.title || ""}
+          placeholder="EventTitle"
+          {...(register("title"), { required: "Title is required" })}
+          error={errors.title && errors.title.message}
+        />
+        <Controller
+          name="category"
+          control={control}
+          rules={{ required: "Category is required" }}
+          defaultValue={event?.category || ""}
+          render={({ field }) => (
+            <Form.Select
+              options={categoryOptions}
+              clearable
+              placeholder="Category"
+              {...field}
+              onChange={(_, d) =>
+                setValue("category", d.value, { shouldValidate: true })
+              }
+              error={errors.category && errors.category.message}
+            />
+          )}
+        />
+
+        <Form.TextArea
+          defaultValue={event?.description || ""}
+          placeholder="Description"
+          {...(register("description"),
+          { required: "Description is required" })}
+          error={errors.description && errors.description.message}
+        />
+        <Header sub content="Location details" color="teal" />
+        <Form.Input
+          placeholder="City"
+          defaultValue={event?.city || ""}
+          {...(register("city"), { required: "City is required" })}
+          error={errors.city && errors.city.message}
+        />
+        <Form.Input
+          placeholder="Venue"
+          defaultValue={event?.venue}
+          {...(register("venue"), { required: "Venue is required" })}
+          error={errors.venue && errors.venue.message}
+        />
         <Form.Field>
-          <input
-            type="text"
-            placeholder="EventTitle"
-            value={values.title}
-            name="title"
-            onChange={(e) => handleInputChange(e)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type="text"
-            placeholder="Description"
-            value={values.description}
-            name="description"
-            onChange={(e) => handleInputChange(e)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type="text"
-            placeholder="City"
-            value={values.city}
-            name="city"
-            onChange={(e) => handleInputChange(e)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type="text"
-            placeholder="Venue"
-            value={values.venue}
-            name="venue"
-            onChange={(e) => handleInputChange(e)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type="date"
-            placeholder="Date"
-            value={values.date}
+          <Controller
             name="date"
-            onChange={(e) => handleInputChange(e)}
+            control={control}
+            rules={{ required: "Date is required" }}
+            defaultValue={(event && new Date(event.date)) || null}
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={(value) =>
+                  setValue("date", value, { shouldValidate: true })
+                }
+                showTimeSelect
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+                placeholderText="Event Date and Time"
+              />
+            )}
           />
         </Form.Field>
 
-        <Button type="submit" floated="right" positive content="Submit" />
         <Button
+          disabled={!isValid}
+          loading={isSubmitting}
+          type="submit"
+          floated="right"
+          positive
+          content="Submit"
+        />
+        <Button
+          disabled={isSubmitting}
           as={Link}
           to="/events"
           type="button"

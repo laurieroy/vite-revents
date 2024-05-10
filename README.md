@@ -5,6 +5,9 @@
 - Styling: Semantic-UI
 - CUID2 for temporary collision-resistant ID
 - Routing: React Router 6.4
+- State management: Redux
+- Forms: React Hook Form
+   - Datepicker: react-datepicker, to standardize view across browsers
 
 ### To run locally:
 
