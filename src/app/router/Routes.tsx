@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         // loader: teamLoader,
       },
       {
-        path: "/manage/:id",
+        path: "/manageEvent/:id",
         element: <EventForm />,
         // loader: teamLoader,
       },

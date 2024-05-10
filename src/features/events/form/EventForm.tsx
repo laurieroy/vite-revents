@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { createId } from "@paralleldrive/cuid2";
+import { useAppDispatch, useAppSelector } from "@/app/store/store";
+import { createEvent, updateEvent } from "../eventSlice";
 
 export default function EventForm() {
-  const initialValues = {
+  let { id } = useParams();
+  const event = useAppSelector((state) =>
+    state.events.events.find((evt) => evt.id === id)
+  );
+  const initialValues = event ?? {
     id: "",
     title: "",
     date: "",
@@ -16,19 +23,23 @@ export default function EventForm() {
     // attendees: Attendee[];
   };
   const [values, setValues] = useState(initialValues);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function onSubmit() {
-    console.log(values)
-  //   selectedEvent
-  //     ? updateEvent({ ...selectedEvent, ...values })
-  //     : addEvent({
-  //         ...values,
-  //         id: createId(),
-  //         hostedBy: "bob",
-  //         attendees: [],
-  //         hostPhotoURL: "",
-  //       });
- 
+    id = id ?? createId();
+    event
+      ? dispatch(updateEvent({ ...event, ...values }))
+      : dispatch(
+          createEvent({
+            ...values,
+            id,
+            hostedBy: "bob",
+            attendees: [],
+            hostPhotoURL: "",
+          })
+        );
+    navigate(`/events/${id}`);
   }
 
   function handleInputChange(
@@ -40,7 +51,7 @@ export default function EventForm() {
 
   return (
     <Segment clearing>
-      <Header content= "Create Event" />
+      <Header content={event ? "Update Event" : "Create Event"} />
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <input
@@ -90,7 +101,8 @@ export default function EventForm() {
 
         <Button type="submit" floated="right" positive content="Submit" />
         <Button
-          as={Link} to="/events"
+          as={Link}
+          to="/events"
           type="button"
           floated="right"
           content="Cancel"
