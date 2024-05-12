@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { Button } from "semantic-ui-react";
 import { decrement, increment, incrementByAmount } from "./testSlice";
+import { openModal } from "@/app/common/modals/modalSlice";
 
 export default function Scratch() {
   const { data } = useAppSelector((state) => state.test);
@@ -20,10 +21,17 @@ export default function Scratch() {
         color="red"
         content="Decrement"
       />
+
       <Button
         onClick={() => dispatch(incrementByAmount(5))}
         color="teal"
         content="Increment by 5"
+      />
+
+<Button
+        onClick={() => dispatch(openModal({type: "TestModal", data: data}) ) }
+        color="teal"
+        content="Open modal"
       />
     </>
   );
