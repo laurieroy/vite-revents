@@ -1,9 +1,11 @@
 import { useAppSelector } from "@/app/store/store";
-import TestModal from "@/features/scratch/testModal";
+import LoginForm from "@/features/auth/LoginForm";
+import TestModal from "@/features/scratch/TestModal";
 
 export default function ModalManager() {
   const modalLookup = {
     TestModal,
+    LoginForm,
   };
 
   const { type, data, open } = useAppSelector((state) => state.modals);
@@ -11,6 +13,7 @@ export default function ModalManager() {
   let renderedModal;
 
   if (open && type) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ModalComponent = (modalLookup as any)[type];
     renderedModal = <ModalComponent data={data} />;
   }

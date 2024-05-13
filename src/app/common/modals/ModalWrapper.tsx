@@ -13,7 +13,7 @@ export default function ModalWrapper({ children, header, ...props }: Props) {
   const dispatch = useAppDispatch();
 
   return (
-    <Modal open={open} onclose={() => dispatch(closeModal())} size={props.size}>
+    <Modal open={open} onClose={() => dispatch(closeModal())} size={props.size}>
       {header && <Modal.Header>{header}</Modal.Header>}
       <Modal.Content>{children}</Modal.Content>
     </Modal>
