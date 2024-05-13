@@ -3,6 +3,7 @@ import { Button, Form } from "semantic-ui-react";
 import { useForm, FieldValues } from "react-hook-form";
 import { useAppDispatch } from "@/app/store/store";
 import { closeModal } from "@/app/common/modals/modalSlice";
+import { signIn } from "./authSlice";
 
 export default function LoginForm() {
   const {
@@ -13,7 +14,7 @@ export default function LoginForm() {
   const dispatch = useAppDispatch();
 
   function onSubmit(data: FieldValues) {
-    console.log(data);
+    dispatch(signIn(data));
     dispatch(closeModal());
   }
 
@@ -40,7 +41,7 @@ export default function LoginForm() {
           {...register("password", { required: true })}
           error={errors.password && "Password is required"}
         />
-      </Form>
+
       <Button
         type="submit"
         fluid
@@ -50,6 +51,7 @@ export default function LoginForm() {
         loading={isSubmitting}
         disabled={!isValid || !isDirty || isSubmitting}
       />
+            </Form>
     </ModalWrapper>
   );
 }

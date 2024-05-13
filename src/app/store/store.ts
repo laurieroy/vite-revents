@@ -3,12 +3,14 @@ import { testSlice } from "@/features/scratch/testSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { modalSlice } from "../common/modals/modalSlice";
+import { authSlice } from "@/features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
     test: testSlice.reducer,
     events: eventSlice.reducer,
-    modals: modalSlice.reducer
+    modals: modalSlice.reducer,
+    auth: authSlice.reducer
   },
 });
 
