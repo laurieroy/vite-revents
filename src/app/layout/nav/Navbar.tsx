@@ -12,7 +12,7 @@ export default function Navbar() {
       <Container>
         <MenuItem header as={NavLink} to="/">
           <img src="/logo.png" alt="logo" />
-          Revents
+          Re-events
         </MenuItem>
 
         <MenuItem name="Events" as={NavLink} to="/events" />

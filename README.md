@@ -1,5 +1,8 @@
 # Revents front-end
 
+This is the frontend for a social project to create an event that has a location, date & time, and host. Other users can then join the event. Events are organized by category. 
+The backend is in firebase, as is user management. The original project was built by Neil Cummings. 
+
 ## Tech Stack
 - React + TypeScript + Vite
 - Styling: Semantic-UI

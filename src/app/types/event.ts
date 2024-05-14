@@ -9,10 +9,10 @@ export type AppEvent = {
   hostedBy: string;
   hostPhotoURL: string;
   attendees: Attendee[];
-}
+};
 
 export type Attendee = {
   id: string;
   name: string;
-  photoURL: string;
-}
+  photoUrl: string;
+};

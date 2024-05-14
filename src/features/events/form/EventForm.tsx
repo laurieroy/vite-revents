@@ -87,7 +87,7 @@ export default function EventForm() {
         />
         <Form.Input
           placeholder="Venue"
-          defaultValue={event?.venue}
+          defaultValue={event?.venue || ""}
           {...(register("venue"), { required: "Venue is required" })}
           error={errors.venue && errors.venue.message}
         />
